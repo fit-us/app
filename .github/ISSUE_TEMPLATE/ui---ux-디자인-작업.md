@@ -3,8 +3,7 @@ name: UI / UX 디자인 작업
 about: UI / UX 디자인 작업 및 변경사항
 title: "[\U0001F3A8DESIGN] "
 labels: 디자인 변경
-assignees: ''
-
+assignees: ""
 ---
 
 ## UI / UX 디자인 작업
