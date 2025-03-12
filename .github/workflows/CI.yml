@@ -32,8 +32,6 @@ jobs:
             expo-cache: true
             packager: yarn
 
-      - name: Check Expo CLI version
-        run: yarn expo --version
 
       - name: Get Yarn Cache Dir Path
         id: yarn-cache-dir-path
