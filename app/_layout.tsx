@@ -12,10 +12,14 @@ import "../global.css";
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-    const colorScheme = useColorScheme();
-    const [loaded] = useFonts({
-        SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-    });
+  const colorScheme = useColorScheme();
+  const [loaded] = useFonts({
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    "suit-regular": require("../assets/fonts/SUIT/SUIT-Regular.ttf"),
+    "suit-extrabold": require("../assets/fonts/SUIT/SUIT-ExtraBold.ttf"),
+    "suit-bold": require("../assets/fonts/SUIT/SUIT-Bold.ttf"),
+    "suit-light": require("../assets/fonts/SUIT/SUIT-Light.ttf"),
+  });
 
     useEffect(() => {
         if (loaded) {
