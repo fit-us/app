@@ -1,0 +1,103 @@
+name: SolutionChallenge RN Actions
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+env:
+  YARN_ENABLE_GLOBAL_CACHE: "true"
+  EXPO_CLI_VERSION: "~52.0.37"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      cache-hit: ${{ steps.yarn-cache.outputs.cache-hit}}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+          cache-dependency-path: "**/yarn.lock"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+          cache-dependency-path: "**/yarn.lock"
+        
+      - name: Setup Expo
+        uses: expo/expo-github-action@v8
+        with:
+            expo-version: ${{ env.EXPO_CLI_VERSION }}
+
+      - name: Get Yarn Cache Dir Path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+      - name: Caching Yarn Dependencies
+        uses: actions/cache@v4
+        id: yarn-cache
+        with:
+          path: |
+            node_modules
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-
+          enableCrossOsArchive: true
+          lookup-only: true
+
+      - name: Install Dependencies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile --prefer-offline --network-concurrency 8
+
+      - name: Cache Expo Build
+        id: expo-build-cache
+        uses: actions/cache@v4
+        with:
+            path: .expo
+            key: ${{ runner.os }}-expo-${{ hashFiles('**/*.{js,jsx,ts,tsx,json}') }}-${{ hashFiles('yarn.lock') }}
+
+      # - name: Lint test
+      #   run: yarn lint
+
+      # - name: Test
+      #   run: yarn test
+      
+      - name: Cache Build
+        id: build-cache
+        uses: actions/cache@v4
+        with:
+          path: dist
+          key: ${{ runner.os }}-build-${{ hashFiles('**/*.{js,jsx,ts,tsx,json}') }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os}}-build-
+
+      - name: Build
+        if: steps.build-cache.outputs.cache-hit != 'true'
+        run: yarn build
+
+      # - name: Hashing Tag
+      #   id: sha256
+      #   run: |
+      #     echo "sha=$(echo ${{ github.sha }} | cut -c1-7" >> $GITHUB_OUTPUT
+      #     echo "timestamp=$(date +%Y%m%d-%H%M%S)" >> $GITHUB_OUTPUT
+
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v3
+      # - name: Build and Push
+      #   uses: docker/build-push-action@v6
+      #   with:
+      #     push: true
+      #     tags: |
+      #       FE/app:latest
+      #       FE/app:${{ steps.sha256.outputs.sha }}
+      #       FE/app:${{ steps.sha256.outputs.timestamp }}-${{ steps.sha256.outputs.sha }}
