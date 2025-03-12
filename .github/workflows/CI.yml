@@ -8,7 +8,6 @@ on:
 
 env:
   YARN_ENABLE_GLOBAL_CACHE: "true"
-  EXPO_CLI_VERSION: "latest"
 
 jobs:
   build:
@@ -29,7 +28,12 @@ jobs:
       - name: Setup Expo
         uses: expo/expo-github-action@v8
         with:
-            expo-version: ${{ env.EXPO_CLI_VERSION }}
+            expo-version: latest
+            expo-cache: true
+            packager: yarn
+
+      - name: Check Expo CLI version
+        run: yarn expo --version
 
       - name: Get Yarn Cache Dir Path
         id: yarn-cache-dir-path
@@ -74,10 +78,6 @@ jobs:
           key: ${{ runner.os }}-build-${{ hashFiles('**/*.{js,jsx,ts,tsx,json}') }}-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             ${{ runner.os}}-build-
-
-      - name: Build
-        if: steps.build-cache.outputs.cache-hit != 'true'
-        run: yarn build
 
       # - name: Hashing Tag
       #   id: sha256
