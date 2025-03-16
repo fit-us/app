@@ -36,8 +36,6 @@ export default function SelectEmotion() {
             <LinearGradient colors={PALETTE[emotion].BACKGROUND_COLOR} style={styles.background} />
             <View className="flex-1 flex-col justify-around px-4 pt-28">
                 <View className="items-center">
-                    {/* <Text className="text-2xl font-bold">지난 순간에 느꼈던</Text>
-                    <Text className="text-2xl font-bold">감정을 선택해보세요</Text> */}
                     <Text className="text-2xl font-bold">{moment}</Text>
                     <Text className="text-2xl font-bold">감정을 선택해보세요</Text>
                 </View>

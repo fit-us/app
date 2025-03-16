@@ -1,6 +1,6 @@
 import { LinearGradient } from "expo-linear-gradient"
 import { Stack, router } from "expo-router"
-import { StyleSheet, Text, TouchableOpacity, View, SafeAreaView } from "react-native"
+import { StyleSheet, Text, TouchableOpacity, View, SafeAreaView, Alert } from "react-native"
 import dayjs from "dayjs"
 import { useState } from "react"
 import Button from "@/app/components/Button"
@@ -17,6 +17,14 @@ export default function FormEmotion() {
 
     const handleSelect = (moment: string) => {
         setSelectedMoment(moment)
+    }
+
+    const showSelectionAlert = () => {
+        Alert.alert(
+            "순간을 선택해주세요",
+            "어느 순간을 기록하고 싶은지 선택해주세요",
+            [{ text: "확인", onPress: () => console.log("Alert닫") }]
+        )
     }
 
     const handleNext = () => {
@@ -107,7 +115,7 @@ export default function FormEmotion() {
             <View className="px-4 pb-8">
                 <Button
                     label="다음"
-                    onPress={isButtonEnabled ? handleNext : () => { }}
+                    onPress={isButtonEnabled ? handleNext : () => showSelectionAlert()}
                     style={[
                         PALETTE[emotion].BUTTON
                     ]}
