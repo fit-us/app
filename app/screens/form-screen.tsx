@@ -15,12 +15,67 @@ import {
 } from "react-native"
 import { useEmotion } from "@/app/EmotionContext"
 import { PALETTE } from "@/app/styles/palette"
+import { useState } from "react"
+import { Emotion } from "@/app/types/emotion"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import dayjs from "dayjs"
 
 export default function FormScreen() {
-    const { emotion, emotionText, expressions } = useEmotion()
+    const { emotion, emotionText, expressions, setEmotion, setMoment, setExpressions } = useEmotion()
+    const [place, setPlace] = useState("")
+    const [description, setDescription] = useState("")
 
-    const handleNext = () => {
+    const day = dayjs()
+    const dayTransformer = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"]
+    const now = day.get("M") + 1 + "월 " + day.get("D") + "일 " + dayTransformer[day.get("d")]
+
+    const saveEmotion = async (newEmotion: Emotion) => {
+        try {
+            const existingEmotions = await getExistEmotion();
+            const appendEmotion = [...existingEmotions, newEmotion]
+            AsyncStorage.setItem('emotions', JSON.stringify(appendEmotion))
+        } catch (e) {
+            console.log("er")
+        }
+
+    }
+    const getExistEmotion = async (): Promise<Emotion[]> => {
+        try {
+            const getExistEmotionJson = await AsyncStorage.getItem('emotions')
+            return getExistEmotionJson !== null ? JSON.parse(getExistEmotionJson) : []
+        } catch (e) {
+            console.error("잘못된 요청입니다.")
+            return [];
+        }
+    }
+
+    const handleNext = async () => {
+        submitEmotion();
+        setEmotion(0)
+        setMoment("")
+        setExpressions([])
         router.push("/App")
+    }
+
+    const changePlace = (place: string) => {
+        setPlace(place)
+    }
+
+    const changeDescription = (desc: string) => {
+        setDescription(desc)
+    }
+
+    const submitEmotion = async () => {
+        const newEmotion: Emotion = {
+            emotion,
+            emotionText,
+            emotionPlace: place,
+            emotionDescription: description,
+            expressions,
+            timeStamp: now
+        };
+
+        await saveEmotion(newEmotion)
     }
 
     return (
@@ -61,7 +116,7 @@ export default function FormScreen() {
                         <Text style={styles.textStyle} className="py-2">
                             어떤 장소에서 이 감정을 느꼈나요?
                         </Text>
-                        <TextInput placeholder="장소를 입력해보세요" style={styles.textInputStyle} className="p-3" />
+                        <TextInput placeholder="장소를 입력해보세요" style={styles.textInputStyle} className="p-3" value={place} onChangeText={changePlace} />
                     </View>
 
                     <View className="mb-20">
@@ -74,12 +129,14 @@ export default function FormScreen() {
                             placeholder="상황을 입력하면 OO(팀 이름)이 키워드를 분석하여 기분에 영향을 미친 요인을 구체적으로 보여줄거에요!"
                             multiline
                             textAlignVertical="top"
+                            value={description}
+                            onChangeText={changeDescription}
                         />
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
             <View className="px-4 pb-8">
-                <Button onPress={handleNext} label="다음" style={PALETTE[emotion].BUTTON} activeOpacity={0.8} />
+                <Button onPress={handleNext} label="기록하기" style={PALETTE[emotion].BUTTON} activeOpacity={0.8} />
             </View>
         </SafeAreaView>
     )
