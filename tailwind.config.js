@@ -16,4 +16,10 @@ module.exports = {
     },
   },
   plugins: [],
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
+  corePlugins: {
+    backgroundImage: true,
+  }
 };
