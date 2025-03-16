@@ -1,6 +1,8 @@
 import { createContext, useState, useContext, ReactNode } from "react";
 
 export type EmotionContextType = {
+    moment: string;
+    setMoment: (value: string) => void
     emotion: number;
     setEmotion: (value: number) => void;
     emotionText: string;
@@ -27,11 +29,13 @@ const getEmotionTextHelper = (value: number): string => {
 
 export const EmotionProvider = ({ children }: { children: ReactNode }) => {
     const [emotion, setEmotion] = useState<number>(0);
-
+    const [moment, setMoment] = useState<string>("")
     const [expressions, setExpressions] = useState<string[]>([])
     const emotionText = getEmotionTextHelper(emotion);
 
     const contextValue = {
+        moment,
+        setMoment,
         emotion,
         setEmotion,
         emotionText,
