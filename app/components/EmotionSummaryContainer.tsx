@@ -62,9 +62,9 @@ const EmotionSummaryContainer = ({
 
     return (
         <ScrollView className="flex-1 px-2 rounded-3xl">
-            <LinearGradient colors={["rgba(0, 0, 255, 0.24)", "rgba(201, 196, 242, 0.60)"]} style={styles.background} />
+            <LinearGradient colors={["rgba(0, 0, 255, 0.24)", "rgba(255,255,255,1)"]} style={styles.background} />
             <View className="px-3 py-6 rounded-full">
-                <Text className="text-lg text-gray-600 text-center mb-6">하루의 감정</Text>
+                <Text className="text-lg text-black text-center mb-6">하루의 감정</Text>
                 <View className="items-center justify-center my-6">
                     <Image source={dayEmotionImage} style={styles.dayEmotionImage} />
                 </View>
