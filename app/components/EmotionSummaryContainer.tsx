@@ -50,6 +50,7 @@ const EmotionSummaryContainer = ({
                 pathname: "/screens/emotions-all",
                 params: {
                     emotions: JSON.stringify(emotions),
+                    date,
                     dayEmotions: JSON.stringify(dayEmotions),
                     dayEmotionSummary,
                     dayEmotionPlace,

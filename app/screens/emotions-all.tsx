@@ -7,7 +7,7 @@ import { Image } from "expo-image"
 import { LinearGradient } from "expo-linear-gradient"
 
 export default function AllEmotionsModal() {
-    const { emotions: emotionsParam, dayEmotions, dayEmotionSummary, dayEmotionPlace, dayEmotionDescription, dayEmotionImage } = useLocalSearchParams()
+    const { emotions: emotionsParam, date, dayEmotions, dayEmotionSummary, dayEmotionPlace, dayEmotionDescription, dayEmotionImage } = useLocalSearchParams()
     const [emotions, setEmotions] = useState<Emotion[]>([])
     const router = useRouter();
     useEffect(() => {
@@ -37,8 +37,9 @@ export default function AllEmotionsModal() {
             <SafeAreaView style={styles.container}>
                 <LinearGradient style={styles.rectangleLineargradient} colors={['rgba(105, 77, 255, 0.25)', 'rgba(255, 255, 255, 0.5)']} />
                 {/* <Text>나중에 색깔 바꿔야함</Text> */}
-                <ScrollView className="flex-1 px-5 py-6">
-                    <View className="items-center mb-6">
+                <ScrollView className="flex-1 px-5 py-3">
+                    <View className="items-center mb-2">
+                        <Text className="text-2xl font-bold mb-4">{date}</Text>
                         <Image source={require("@/app/assets/0.png")} style={styles.dayEmotionImage} />
                         <Text className="text-2xl font-bold mb-2">{dayEmotions}</Text>
                         <Text className="text-lg text-gray-600 mb-2">{dayEmotionSummary}</Text>
