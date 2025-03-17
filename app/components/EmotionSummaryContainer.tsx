@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native"
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from "react-native"
 import { Image } from "expo-image"
 import EmotionSummaryDayBox from "@/app/components/EmotionSummaryDayBox"
 import type { Emotion } from "@/app/types/emotion"
@@ -7,7 +7,6 @@ import { useCallback, useState } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useRouter } from "expo-router"
 import { LinearGradient } from "expo-linear-gradient"
-import { PALETTE } from "@/app/styles/palette"
 
 type EmotionSummaryContainerProps = {
     date: string
