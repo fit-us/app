@@ -64,7 +64,7 @@ export default function EmotionExpress() {
                             key={index}
                             label={expr}
                             onPress={() => handleExpressionSelect(expr)}
-                            selected={selectedExpressions.includes(expr)} // 배열에 포함되어 있는지 확인
+                            selected={selectedExpressions.includes(expr)}
                         // style={styles.expressionBox}
                         />
                     ))}
