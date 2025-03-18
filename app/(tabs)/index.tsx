@@ -1,10 +1,10 @@
 import { useState, useRef } from "react"
 import EmotionSummaryContainer from "@/app/components/EmotionSummaryContainer"
 import { ImageBackground } from "expo-image"
-import { router } from "expo-router"
 import { View, Text, TouchableOpacity, FlatList, Dimensions, type ViewToken, StyleSheet } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
-import Button from "@/app/components/Button"
+import { router } from "expo-router"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 export default function Home() {
     const emotionData = [
@@ -43,15 +43,14 @@ export default function Home() {
             setCurrentIndex(viewableItems[0].index)
         }
     })
-
     return (
         <ImageBackground source={require("@/app/assets/bgImage.png")} style={{ flex: 1 }}>
             <SafeAreaView className="flex-1 items-center justify-center px-6">
                 <View className="flex-1 w-full">
-                    <View className="flex-row  items-center mb-4">
-                        <Text className="font-bold text-2xl px-2 text-black">3월 31일 일요일</Text>
-                        <TouchableOpacity>
-                            <Text>기록</Text>
+                    <View className="flex-row  items-center justify-between mb-4">
+                        <Text className="font-bold text-2xl px-3 text-black">3월 31일 일요일</Text>
+                        <TouchableOpacity className="mr-3 rounded-full justify-center bg-black w-16 h-9" onPress={() => router.push("/screens/form-register-emotion")}>
+                            <Text className="text-white font-semibold text-center">기록</Text>
                         </TouchableOpacity>
                     </View>
                     <FlatList
