@@ -1,19 +1,20 @@
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import "../global.css"
 import { EmotionProvider } from "@/app/EmotionContext";
 
 export default function RootLayout() {
+    const router = useRouter();
     return (
         <EmotionProvider>
-            <Stack
-                screenOptions={{
-                    headerShown: true,
-                    headerShadowVisible: false,
-                    headerBackTitle: "뒤로",
-                    headerBackVisible: true,
-                    headerTitle: ""
-                }}
-            />
+            <Stack>
+                <Stack.Screen
+                    name="index"
+                    options={{
+                        presentation: "transparentModal",
+                        headerShown: false,
+                    }}
+                />
+            </Stack>
         </EmotionProvider>
     )
 }

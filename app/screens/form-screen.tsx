@@ -27,8 +27,8 @@ export default function FormScreen() {
 
     const day = dayjs()
     const dayTransformer = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"]
-    const now = day.get("M") + 1 + "월 " + day.get("D") + "일 " + dayTransformer[day.get("d")]
-
+    const now = day.get('hour') + "시" + day.get("minute") + "분"
+    // day.get("M") + 1 + "월 " + day.get("D") + "일 " + dayTransformer[day.get("d")]
     const saveEmotion = async (newEmotion: Emotion) => {
         try {
             const existingEmotions = await getExistEmotion();
