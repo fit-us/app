@@ -2,7 +2,7 @@ import { LinearGradient } from "expo-linear-gradient"
 import { Stack, router } from "expo-router"
 import { StyleSheet, Text, TouchableOpacity, View, SafeAreaView, Alert } from "react-native"
 import dayjs from "dayjs"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Button from "@/app/components/Button"
 import { useEmotion } from "@/app/EmotionContext"
 import { PALETTE } from "@/app/styles/palette"
@@ -19,6 +19,7 @@ export default function FormEmotion() {
     const handleSelect = (moment: string) => {
         setSelectedMoment(moment)
     }
+
 
     const showSelectionAlert = () => {
         Alert.alert(
@@ -40,19 +41,6 @@ export default function FormEmotion() {
     return (
         <SafeAreaView style={styles.container}>
             <LinearGradient colors={PALETTE[emotion].BACKGROUND_COLOR} style={styles.background} />
-            <Stack.Screen
-                options={{
-                    headerRight: () => (
-                        <TouchableOpacity onPress={() => router.replace("/")} className="mr-4">
-                            <Text className="text-base font-medium text-black">취소</Text>
-                        </TouchableOpacity>
-                    ),
-                    headerTransparent: true,
-                    headerTitle: "",
-                    headerShadowVisible: false,
-                }}
-            />
-
             <View style={styles.content}>
                 <View style={styles.textContainer}>
                     <Text style={styles.greetingStyle}>감정을 기록해보세요</Text>

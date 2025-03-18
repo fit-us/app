@@ -1,4 +1,6 @@
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from "react-native"
+"use client"
+
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Dimensions } from "react-native"
 import { Image } from "expo-image"
 import EmotionSummaryDayBox from "@/app/components/EmotionSummaryDayBox"
 import type { Emotion } from "@/app/types/emotion"
@@ -7,6 +9,7 @@ import { useCallback, useState } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useRouter } from "expo-router"
 import { LinearGradient } from "expo-linear-gradient"
+import NoEmotionSummaryDayBox from "@/app/components/NoEmotionSummaryBox"
 
 type EmotionSummaryContainerProps = {
     date: string
@@ -15,6 +18,7 @@ type EmotionSummaryContainerProps = {
     dayEmotionPlace: string
     dayEmotionDescription: string
     dayEmotionImage: any
+    width?: number
 }
 
 const EmotionSummaryContainer = ({
@@ -24,9 +28,11 @@ const EmotionSummaryContainer = ({
     dayEmotionPlace,
     dayEmotionDescription,
     dayEmotionImage,
+    width = Dimensions.get("window").width,
 }: EmotionSummaryContainerProps) => {
     const [emotions, setEmotions] = useState<Emotion[]>()
     const router = useRouter()
+    const containerWidth = width - 32
 
     useFocusEffect(
         useCallback(() => {
@@ -62,37 +68,56 @@ const EmotionSummaryContainer = ({
     }
 
     return (
-        <ScrollView className="flex-1 px-2 rounded-3xl">
-            <LinearGradient colors={["rgba(0, 0, 255, 0.24)", "rgba(255,255,255,1)"]} style={styles.background} />
-            <View className="px-3 py-6 rounded-full">
-                <Text className="text-lg text-black text-center mb-6">하루의 감정</Text>
-                <View className="items-center justify-center my-6">
-                    <Image source={dayEmotionImage} style={styles.dayEmotionImage} />
-                </View>
-                <View className="items-center mb-4">
-                    <Text className="text-2xl font-bold mb-2">{dayEmotions.join(", ")}</Text>
-                    <Text className="text-lg text-gray-600 mb-2">{dayEmotionSummary}</Text>
-                    <Text className="text-base text-gray-500 mb-1">{dayEmotionPlace}</Text>
-                    <Text className="text-sm text-gray-500">{dayEmotionDescription}</Text>
-                </View>
-                <View className="h-px bg-gray-200 my-6" />
-                <Text className="text-lg text-gray-600 mb-4 self-center">순간의 감정</Text>
-                <View className="space-y-4">
-                    {emotions && emotions.length > 0 && <EmotionSummaryDayBox {...emotions[0]} />}
-                </View>
+        <View style={{ width: containerWidth }}>
+            <ScrollView
+                className="flex-1 rounded-3xl"
+                contentContainerStyle={{ paddingHorizontal: 8 }}
+                showsVerticalScrollIndicator={false}
+            >
+                <View style={[styles.cardContainer, { width: containerWidth - 16 }]}>
+                    <LinearGradient
+                        style={styles.background}
+                        locations={[0, 0.71]}
+                        colors={["rgba(105, 77, 255, 0.25)", "rgba(255, 255, 255, 0.5)"]}
+                        start={{ x: 1, y: 0 }}
+                        end={{ x: 1, y: 1 }}
+                    />
+                    <View className="px-3 py-6 rounded-full">
+                        <Text className="text-lg text-black text-center mb-6">하루의 감정</Text>
+                        <View className="items-center justify-center my-6">
+                            <Image source={dayEmotionImage} style={styles.dayEmotionImage} />
+                        </View>
+                        <View className="items-center mb-4">
+                            <Text className="text-2xl font-bold mb-2">{dayEmotions.join(", ")}</Text>
+                            <Text className="text-lg text-gray-600 mb-2">{dayEmotionSummary}</Text>
+                            <Text className="text-base text-gray-500 mb-1">{dayEmotionPlace}</Text>
+                            <Text className="text-sm text-gray-500">{dayEmotionDescription}</Text>
+                        </View>
+                        <View className="h-px bg-gray-200 my-6" />
+                        <Text className="text-lg text-gray-600 mb-4 self-center">순간의 감정</Text>
+                        <View className="space-y-4">
+                            {(emotions && emotions.length > 0) ? <EmotionSummaryDayBox {...emotions[0]} /> : <NoEmotionSummaryDayBox />}
+                        </View>
 
-                {emotions && emotions.length > 0 && (
-                    <TouchableOpacity onPress={handleShowAllEmotions} className="items-center justify-center pt-4 mb-2">
-                        <Text className="text-gray-500 text-base">더 보기</Text>
-                        <View className="w-10 h-1 bg-gray-300 rounded-full" />
-                    </TouchableOpacity>
-                )}
-            </View>
-        </ScrollView>
+                        {emotions && emotions.length > 0 && (
+                            <TouchableOpacity onPress={handleShowAllEmotions} className="items-center justify-center pt-4 mb-2">
+                                <Text className="text-gray-500 text-base">더 보기</Text>
+                                <View className="w-10 h-1 bg-gray-300 rounded-full" />
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                </View>
+            </ScrollView>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
+    cardContainer: {
+        borderRadius: 24,
+        overflow: "hidden",
+        marginVertical: 8,
+    },
     container: {
         flex: 1,
         backgroundColor: "#f5f3ff",

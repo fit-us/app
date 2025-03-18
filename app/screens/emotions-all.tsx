@@ -9,7 +9,6 @@ import { LinearGradient } from "expo-linear-gradient"
 export default function AllEmotionsModal() {
     const { emotions: emotionsParam, date, dayEmotions, dayEmotionSummary, dayEmotionPlace, dayEmotionDescription, dayEmotionImage } = useLocalSearchParams()
     const [emotions, setEmotions] = useState<Emotion[]>([])
-    const router = useRouter();
     useEffect(() => {
         if (emotionsParam && typeof emotionsParam === "string") {
             try {
@@ -22,18 +21,6 @@ export default function AllEmotionsModal() {
 
     return (
         <>
-            <Stack.Screen
-                options={{
-                    title: "전체 감정 기록",
-                    headerShadowVisible: false,
-                    presentation: "modal",
-                    headerStyle: {
-                        backgroundColor: "transparent"
-                    },
-                    headerTransparent: true,
-                    headerRight: () => <Text onPress={() => router.back()}>완료</Text>,
-                }}
-            />
             <SafeAreaView style={styles.container}>
                 <LinearGradient style={styles.rectangleLineargradient} colors={['rgba(105, 77, 255, 0.25)', 'rgba(255, 255, 255, 0.5)']} />
                 {/* <Text>나중에 색깔 바꿔야함</Text> */}

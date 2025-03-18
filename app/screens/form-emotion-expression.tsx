@@ -36,12 +36,6 @@ export default function EmotionExpress() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Stack.Screen options={{
-                headerTransparent: true,
-                headerTitle: "",
-                headerTitleAlign: "center",
-                headerShadowVisible: false,
-            }} />
             <LinearGradient colors={PALETTE[emotion].BACKGROUND_COLOR} style={styles.background} />
             <View className="flex-1 px-4 ">
                 <View className="flex-1 justify-center items-center pt-8">
@@ -65,7 +59,6 @@ export default function EmotionExpress() {
                             label={expr}
                             onPress={() => handleExpressionSelect(expr)}
                             selected={selectedExpressions.includes(expr)}
-                        // style={styles.expressionBox}
                         />
                     ))}
                 </View>
