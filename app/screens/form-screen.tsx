@@ -54,7 +54,7 @@ export default function FormScreen() {
         setEmotion(0)
         setMoment("")
         setExpressions([])
-        router.push("/App")
+        router.replace("/App")
     }
 
     const changePlace = (place: string) => {
@@ -81,18 +81,6 @@ export default function FormScreen() {
     return (
         <SafeAreaView className="flex-1">
             <LinearGradient colors={PALETTE[emotion].BACKGROUND_COLOR} style={styles.background} />
-            <Stack.Screen
-                options={{
-                    headerRight: () => (
-                        <TouchableOpacity onPress={() => router.replace("/")} className="mr-4">
-                            <Text className="text-base font-medium text-black">취소</Text>
-                        </TouchableOpacity>
-                    ),
-                    headerTransparent: true,
-                    headerTitle: "",
-                    headerShadowVisible: false,
-                }}
-            />
             <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.keyboardView}>
                 <ScrollView className="flex-1 px-4">
                     <View className="items-center my-6">
