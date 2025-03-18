@@ -19,6 +19,7 @@ export default function TabsLayout() {
                 options={{
                     title: "홈",
                     tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
+                    animation: "shift"
                 }}
             />
             <Tabs.Screen

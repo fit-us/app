@@ -14,11 +14,14 @@ export default function RootLayout() {
     return (
         <EmotionProvider>
             <Stack screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="홈" />
+                <Stack.Screen name="(tabs)" options={{
+                    headerBackTitle: "뒤로"
+                }} />
                 <Stack.Screen
                     name="App"
                     options={{
                         headerShown: false,
+                        headerBackTitle: "뒤로"
                     }}
                 />
                 <Stack.Screen
@@ -26,6 +29,7 @@ export default function RootLayout() {
                     options={{
                         animation: "ios_from_left",
                         headerShown: false,
+                        headerBackTitle: "뒤로"
                     }}
                 />
                 <Stack.Screen
@@ -33,6 +37,7 @@ export default function RootLayout() {
                     options={{
                         animation: "ios_from_right",
                         headerTitle: "",
+                        headerBackTitle: "뒤로",
                         headerRight: cancelProcess,
                         headerShown: true,
                         headerTransparent: true,
