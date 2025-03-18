@@ -22,7 +22,7 @@ const EmotionSummaryDayBox = ({
                 <View className="flex-row justify-between items-center">
                     <View className="flex-row flex-wrap">
                         {expressions.map((exp, index) => (
-                            <Text key={exp} className="text-md font-bold">
+                            <Text key={exp} className="text-md font-bold px-3">
                                 {exp}
                                 {index < expressions.length - 1 ? ", " : ""}
                             </Text>
@@ -30,9 +30,11 @@ const EmotionSummaryDayBox = ({
                     </View>
                     <Text className="text-sm text-gray-400">{timeStamp}</Text>
                 </View>
-                <Text className="text-sm text-gray-600 ">{emotionText}</Text>
-                <Text className="text-base text-gray-600">{emotionPlace}</Text>
-                <Text className="text-sm text-gray-500">{emotionDescription}</Text>
+                <View className="px-3">
+                    <Text className="text-sm text-gray-600 ">{emotionText}</Text>
+                    <Text className="text-base text-gray-600">{emotionPlace}</Text>
+                    <Text className="text-sm text-gray-500">{emotionDescription}</Text>
+                </View>
             </View>
         </View>
     )
